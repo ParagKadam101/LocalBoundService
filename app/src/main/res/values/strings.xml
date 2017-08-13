@@ -6,4 +6,7 @@
     <string name="unbind_service">Unbind Service</string>
     <string name="random_number">Random Number</string>
     <string name="service_not_bound">Service Not Bound</string>
+    <string name="number">Random Number : </string>
+    <string name="bound_status">Status = Bound</string>
+    <string name="unbound_status">Status = Unbound</string>
 </resources>

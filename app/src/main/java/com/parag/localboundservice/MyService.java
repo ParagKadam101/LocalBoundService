@@ -12,9 +12,6 @@ public class MyService extends Service {
 
     private final String TAG = getClass().getSimpleName();
     private boolean isRandomGenerationOn;
-    private int randomNumber;
-    private final int MIN = 1;
-    private final int MAX = 1000;
 
     class MyServiceBinder extends Binder
     {
@@ -57,18 +54,19 @@ public class MyService extends Service {
 
     public void startRandomNumberGenerator()
     {
+        final int MIN = 1;
+        final int MAX = 1000;
+        int randomNumber;
         Random random = new Random();
-        Intent intent = new Intent("number_broadcast");
+        Intent broadcastIntent = new Intent("broadcast");
         while(isRandomGenerationOn)
         {
             try {
-
                 if(isRandomGenerationOn) {
                     randomNumber = random.nextInt(MAX) + MIN;
                     Log.d(TAG, "Random number = " + randomNumber);
-
-                    intent.putExtra("number",randomNumber);
-                    sendBroadcast(intent);
+                    broadcastIntent.putExtra("number",""+randomNumber);
+                    sendBroadcast(broadcastIntent);
                 }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -88,10 +86,5 @@ public class MyService extends Service {
         stopRandomNumberGenerator();
         super.onDestroy();
 
-    }
-
-    public int getRandomNumber()
-    {
-        return randomNumber;
     }
 }
