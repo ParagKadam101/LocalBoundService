@@ -24,12 +24,11 @@ public class MyService extends Service {
         }
     }
 
-    IBinder myServiceBinder = new MyServiceBinder();
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
         Log.d(TAG, "onBind");
-        return myServiceBinder;
+        return new MyServiceBinder();
     }
 
     @Override
@@ -59,6 +58,7 @@ public class MyService extends Service {
     public void startRandomNumberGenerator()
     {
         Random random = new Random();
+        Intent intent = new Intent("number_broadcast");
         while(isRandomGenerationOn)
         {
             try {
@@ -66,6 +66,9 @@ public class MyService extends Service {
                 if(isRandomGenerationOn) {
                     randomNumber = random.nextInt(MAX) + MIN;
                     Log.d(TAG, "Random number = " + randomNumber);
+
+                    intent.putExtra("number",randomNumber);
+                    sendBroadcast(intent);
                 }
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
